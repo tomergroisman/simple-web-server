@@ -11,6 +11,7 @@ To start the application on your local machine, run the following commands in yo
 ```shell
 git clone https://github.com/tomergroisman/simple-web-server.git
 cd simple-web-server
+npm install
 npm start <port>
 ```
 
