@@ -66,6 +66,41 @@ const analysis = {
     const sum = priceTagged.reduce((prevVal, curVal) => prevVal + curVal.price, 0);
     return sum / priceTagged.length;
   },
+  listOfTesters: () => {
+    return data.filter(test => !!test.taster_name)
+      .reduce((prevVal, curVal) => {
+        if (!prevVal.includes(curVal.taster_name)) {
+          return [...prevVal, curVal.taster_name];
+        }
+        else {
+          return prevVal;
+        }
+      }, []);
+  },
+  mostExpensiveVariety: () => {
+    const varieties = data.filter(test => !!test.variety)
+      .reduce((prevVal, curVal) => {
+        if (prevVal[curVal.variety]) {
+          prevVal[curVal.variety].count++;
+          prevVal[curVal.variety].sum += curVal.price;
+        }
+        else {
+          prevVal[curVal.variety] = {
+            count: 1,
+            sum: curVal.price
+          };
+        }
+        return prevVal;
+      }, {});
+    for (const variety in varieties) {
+      varieties[variety].average = varieties[variety].sum / varieties[variety].count;
+    }
+    const sortedVarieties = Object.keys(varieties).sort((a, b) => varieties[b].average - varieties[a].average);
+    return {
+      variety: sortedVarieties[0],
+      average_price: varieties[sortedVarieties[0]].average
+    }
+  }
 }
 
 module.exports = analysis;

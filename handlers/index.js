@@ -31,6 +31,20 @@ const handlers = {
   averageWinePrice: (req, res) => {
     res.json(analysis.averageWinePrice());
   },
+  listOfTesters: (req, res) => {
+    const testersList = analysis.listOfTesters();
+    if (req.query.testersCount == "true") {
+      res.json({
+        testers: testersList,
+        testers_count: testersList.length,
+      })
+      return;
+    }
+    res.json(testersList);
+  },
+  mostExpensiveVariety: (req, res) => {
+    res.json(analysis.mostExpensiveVariety());
+  },
   listen: (port) => {
     console.log(`Server is up on port ${port}`);
   }

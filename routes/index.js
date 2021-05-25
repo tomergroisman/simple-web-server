@@ -24,13 +24,21 @@ router.get('/wineTests/mostPopularCountry', handlers.mostPopularCountry);
 // Get all the provinces that start with “B”
 router.get('/wineTests/provincesStartsWithB', handlers.provincesStartsWithB);
 
-// Get all the provinces that start with “B”
+// Get all the tests made for wines from California
 router.get('/wineTests/testsInCalifornia', handlers.testsInCalifornia);
 
-// Get all the provinces that start with “B”
+// Get an object of the number of wines per country
 router.get('/wineTests/numOfWinesPerCountry', handlers.numOfWinesPerCountry);
 
-// Get all the provinces that start with “B”
+// Get the average wine price
 router.get('/wineTests/averageWinePrice', handlers.averageWinePrice);
+
+// Get a list of all the testers
+// By adding the query "?testersCount=true", return an object {testers: Array<string>, testers_count: number}
+router.get('/wineTests/listOfTesters', handlers.listOfTesters);
+
+// Get the most expensive variety (by average)
+// Returns an object {variety: string, average: number}
+router.get('/wineTests/mostExpensiveVariety', handlers.mostExpensiveVariety);
 
 module.exports = router
