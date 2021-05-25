@@ -10,56 +10,41 @@ const analysis = {
     return data.length;
   },
   maxPoints: () => {
-    let max = 0;
-    data.filter(test => !!test.points)
-      .forEach(test => {
-        max = Math.max(max, Number(test.points));
-      });
-    return max;
+    return data.filter(test => !!test.points)
+      .reduce((prevVal, curVal) => {
+        return Math.max(prevVal, Number(curVal.points));
+      }, 0);
   },
   cheapestWine: () => {
-    let cheapest = {
-      price: Infinity
-    }
-    data.filter(test => !!test.price)
-      .forEach(test => {
-        if (test.price < cheapest.price) {
-          cheapest = test;
-        }
-      });
+    const cheapest = data.filter(test => !!test.price)
+      .reduce((prevVal, curVal) => {
+        return (curVal.price < prevVal.price) ? curVal : prevVal;
+      }, { price: Infinity });
     return cheapest.price !== Infinity ? cheapest : null;
   },
   mostPopularCountry: () => {
     const countries = analysis.numOfWinesPerCountry();
-    max = Object.keys(countries)[0];
-    for (const country in countries) {
-      max = countries[country] > countries[max] ? country : max;
-    }
-    return max
+    return Object.keys(countries).reduce((prevVal, curVal) => {
+      return countries[curVal] > (countries[prevVal] || 0) ? curVal : prevVal
+    }, '');
   },
   provincesStartsWithB: () => {
-    let provinces = [];
-    data.filter(test => !!test.province)
-      .forEach(test => {
-        const startsWithB = test.province.toLocaleLowerCase().charAt(0) == 'b';
-        const isNew = provinces.indexOf(test.province) === -1;
-        if (startsWithB && isNew) {
-          provinces.push(test.province)
-        }
-      });
-    return provinces
+    return data.filter(test => !!test.province)
+      .reduce((prevVal, curVal) => {
+        const startsWithB = curVal.province.toLocaleLowerCase().charAt(0) == 'b';
+        const isNew = prevVal.indexOf(curVal.province) === -1;
+        return (startsWithB && isNew) ? [...prevVal, curVal.province] : prevVal;
+      }, []);
   },
   testsInCalifornia: () => {
     return data.filter(test => test.province && test.province.toLocaleLowerCase() === "california").length
   },
   numOfWinesPerCountry: () => {
-    let countries = {};
-    data.forEach(test => {
-      if (test.country) {
-        countries[test.country] ? countries[test.country]++ : countries[test.country] = 1;
-      }
-    });
-    return countries;
+    return data.reduce((countries, curTest) => {
+      return curTest.country ?
+        (countries[curTest.country] ? { ...countries, [curTest.country]: countries[curTest.country] + 1} : { ...countries, [curTest.country]: 1 }) :
+        countries
+    }, {});
   },
   averageWinePrice: () => {
     const priceTagged = data.filter(test => !!test.price);
