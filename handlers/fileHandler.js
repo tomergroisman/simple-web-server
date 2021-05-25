@@ -1,11 +1,11 @@
-var fs = require("fs")
-
 const fileHandler = {
   readJsonFromFile: () => {
-    var data = fs.readFileSync("./students.json")
-    return JSON.parse(data)
+    const data = require("../wines.json")
+    return data
   },
   writeObjectToJson: (obj, filename) => {
     // TODO
   }
 }
+
+module.exports = fileHandler;
