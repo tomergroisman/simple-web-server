@@ -1,4 +1,4 @@
-# simple-web-server
+# Simple Web Server
 
 ## Description
 
@@ -202,7 +202,7 @@ The app will start on `http://localhost:<port>`
 
 * **Response Type:**
 
-  `Array<string>` OR `{ testers: Array<string>, testers_count: number }` (requests with the query param `testersCount=true`)
+  `Array<string>` OR `{ testers: Array<string>, testers_count: number }` (requests with the query param `?testersCount=true`)
 
 ### Most Expensive Variety
 
